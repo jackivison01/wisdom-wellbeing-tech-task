@@ -1,1 +1,14 @@
 mock_data.json
+
+node_modules/
+dist/
+.env
+.env.local
+.env.*.local
+
+*.log
+.DS_Store
+.vscode/
+.idea/
+
+frontend/resource-viewer/README.md
