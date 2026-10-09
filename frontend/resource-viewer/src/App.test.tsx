@@ -39,16 +39,25 @@ describe("resource sorting", () => {
     ]);
   });
 
-  it("keeps category-sorted resources in one shared grid", () => {
+  it("groups resources by category in the initial three-column layout", () => {
     render(<App />);
 
-    const resourceButtons = screen.getAllByRole("button", { name: /^View / });
-    const gridContainers = resourceButtons.map((button) =>
-      button.closest(".MuiGrid-container"),
-    );
+    const categorySections = screen.getAllByRole("region");
 
-    expect(gridContainers[0]).not.toBeNull();
-    expect(new Set(gridContainers).size).toBe(1);
+    expect(categorySections.map((section) => section.getAttribute("aria-label")))
+      .toEqual([
+        "Articles",
+        "Fitness",
+        "Meditation",
+        "Newsletters",
+        "Podcasts",
+        "Recipes",
+      ]);
+    expect(
+      categorySections.every((section) =>
+        section.closest(".MuiGrid-grid-sm-4"),
+      ),
+    ).toBe(true);
   });
 
   it("shows the sort controls underneath the main title", () => {
