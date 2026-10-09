@@ -39,6 +39,18 @@ describe("resource sorting", () => {
     ]);
   });
 
+  it("keeps category-sorted resources in one shared grid", () => {
+    render(<App />);
+
+    const resourceButtons = screen.getAllByRole("button", { name: /^View / });
+    const gridContainers = resourceButtons.map((button) =>
+      button.closest(".MuiGrid-container"),
+    );
+
+    expect(gridContainers[0]).not.toBeNull();
+    expect(new Set(gridContainers).size).toBe(1);
+  });
+
   it("shows the sort controls underneath the main title", () => {
     render(<App />);
 
