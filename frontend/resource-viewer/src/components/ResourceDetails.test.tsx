@@ -16,13 +16,7 @@ const resource: Resource = {
 
 describe("ResourceDetails", () => {
   it("displays the selected resource's complete details", () => {
-    render(
-      <ResourceDetails
-        open
-        resource={resource}
-        onClose={vi.fn()}
-      />,
-    );
+    render(<ResourceDetails open resource={resource} onClose={vi.fn()} />);
 
     expect(
       screen.getByRole("heading", { name: "Mindful Moments" }),
@@ -33,8 +27,6 @@ describe("ResourceDetails", () => {
     ).toBeInTheDocument();
 
     expect(screen.getByText("Uploaded: 10 July 2025")).toBeInTheDocument();
-    expect(
-			screen.getByText("Podcasts · 25 minutes"),
-		).toBeInTheDocument();
+    expect(screen.getByText("Podcasts · 25 minutes")).toBeInTheDocument();
   });
 });

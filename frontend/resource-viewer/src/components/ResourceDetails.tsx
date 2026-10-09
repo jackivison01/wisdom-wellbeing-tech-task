@@ -46,9 +46,7 @@ export function ResourceDetails({
 
           <Typography>{resource.description}</Typography>
 
-          <Typography variant="body2">
-            Uploaded: {uploadedDate}
-          </Typography>
+          <Typography variant="body2">Uploaded: {uploadedDate}</Typography>
 
           <Typography variant="body2">
             Tags: {resource.tags.join(", ")}

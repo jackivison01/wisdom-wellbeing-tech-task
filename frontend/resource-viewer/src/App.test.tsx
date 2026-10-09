@@ -44,14 +44,9 @@ describe("resource sorting", () => {
 
     const categorySections = screen.getAllByRole("region");
 
-    expect(categorySections.map((section) => section.getAttribute("aria-label")))
-      .toEqual([
-        "Fitness",
-        "Meditation",
-        "Newsletters",
-        "Podcasts",
-        "Recipes",
-      ]);
+    expect(
+      categorySections.map((section) => section.getAttribute("aria-label")),
+    ).toEqual(["Fitness", "Meditation", "Newsletters", "Podcasts", "Recipes"]);
     for (const section of categorySections) {
       const categoryGrid = section.querySelector(".MuiGrid-container");
       const resourceButtons = within(section).getAllByRole("button", {
@@ -72,10 +67,14 @@ describe("resource sorting", () => {
     render(<App />);
 
     const main = screen.getByRole("main");
-    const title = within(main).getByRole("heading", { name: "Resource Centre" });
+    const title = within(main).getByRole("heading", {
+      name: "Resource Centre",
+    });
     const sortLabel = within(main).getByText("Sort by");
 
-    expect(title.compareDocumentPosition(sortLabel) & Node.DOCUMENT_POSITION_FOLLOWING)
-      .toBeTruthy();
+    expect(
+      title.compareDocumentPosition(sortLabel) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
   });
 });

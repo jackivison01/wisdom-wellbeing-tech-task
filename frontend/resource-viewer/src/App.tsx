@@ -11,8 +11,9 @@ type SortMode = "category" | "date";
 
 export default function App() {
   const [sortMode, setSortMode] = useState<SortMode>("category");
-  const [selectedResource, setSelectedResource] =
-    useState<Resource | null>(null);
+  const [selectedResource, setSelectedResource] = useState<Resource | null>(
+    null,
+  );
   const resourcesByCategory = useMemo(
     () =>
       Object.entries(groupByCategory(resources)).sort(([first], [second]) =>
@@ -72,7 +73,10 @@ export default function App() {
         <Grid container spacing={3}>
           {resourcesByDate.map((resource) => (
             <Grid key={resource.id} size={{ xs: 12, sm: 4 }}>
-              <ResourceCard resource={resource} onSelect={setSelectedResource} />
+              <ResourceCard
+                resource={resource}
+                onSelect={setSelectedResource}
+              />
             </Grid>
           ))}
         </Grid>

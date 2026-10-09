@@ -41,9 +41,9 @@ describe("ResourceCard", () => {
     render(<ResourceCard resource={resource} onSelect={onSelect} />);
 
     await user.click(
-        screen.getByRole("button", { name: "View Mindful Moments" }),
+      screen.getByRole("button", { name: "View Mindful Moments" }),
     );
 
     expect(onSelect).toHaveBeenCalledWith(resource);
-	});
+  });
 });
