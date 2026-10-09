@@ -49,26 +49,25 @@ export default function App() {
       </Stack>
 
       {sortMode === "category" ? (
-        <Grid container spacing={3}>
+        <Stack spacing={4}>
           {resourcesByCategory.map(([category, categoryResources]) => (
-            <Grid key={category} size={{ xs: 12, sm: 4 }}>
-              <Box component="section" aria-label={category}>
-                <Typography variant="h5" component="h2" gutterBottom>
-                  {category}
-                </Typography>
-                <Stack spacing={2}>
-                  {categoryResources.map((resource) => (
+            <Box component="section" aria-label={category} key={category}>
+              <Typography variant="h5" component="h2" gutterBottom>
+                {category}
+              </Typography>
+              <Grid container spacing={3}>
+                {categoryResources.map((resource) => (
+                  <Grid key={resource.id} size={{ xs: 12, sm: 4 }}>
                     <ResourceCard
-                      key={resource.id}
                       resource={resource}
                       onSelect={setSelectedResource}
                     />
-                  ))}
-                </Stack>
-              </Box>
-            </Grid>
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
           ))}
-        </Grid>
+        </Stack>
       ) : (
         <Grid container spacing={3}>
           {resourcesByDate.map((resource) => (
