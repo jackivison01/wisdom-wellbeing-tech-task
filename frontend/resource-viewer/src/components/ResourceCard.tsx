@@ -33,7 +33,12 @@ export function ResourceCard({ resource, onSelect }: ResourceCardProps) {
             {resource.title}
           </Typography>
 
-          <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" sx={{ mb: 2 }}>
+          <Stack
+            direction="row"
+            spacing={1}
+            useFlexGap
+            sx={{ mb: 2, flexWrap: "wrap" }}
+          >
             {resource.tags.slice(0, 3).map((tag) => (
               <Chip key={tag} label={tag} size="small" />
             ))}
