@@ -15,11 +15,11 @@ describe("resource sorting", () => {
     fireEvent.click(screen.getByRole("button", { name: "Category" }));
 
     expect(visibleResourceTitles()).toEqual([
-      "The Science of Sleep",
       "10-Minute Morning Stretch",
       "Guided Meditation for Stress Relief",
       "Wellness Weekly",
       "Mindful Moments",
+      "The Science of Sleep",
       "Energy Boost Smoothie",
     ]);
   });
@@ -39,25 +39,33 @@ describe("resource sorting", () => {
     ]);
   });
 
-  it("groups resources by category in the initial three-column layout", () => {
+  it("renders one wrapping three-column card grid inside each category", () => {
     render(<App />);
 
     const categorySections = screen.getAllByRole("region");
 
     expect(categorySections.map((section) => section.getAttribute("aria-label")))
       .toEqual([
-        "Articles",
         "Fitness",
         "Meditation",
         "Newsletters",
         "Podcasts",
         "Recipes",
       ]);
-    expect(
-      categorySections.every((section) =>
-        section.closest(".MuiGrid-grid-sm-4"),
-      ),
-    ).toBe(true);
+    for (const section of categorySections) {
+      const categoryGrid = section.querySelector(".MuiGrid-container");
+      const resourceButtons = within(section).getAllByRole("button", {
+        name: /^View /,
+      });
+
+      expect(categoryGrid).not.toBeNull();
+      expect(
+        resourceButtons.every((button) => {
+          const gridItem = button.closest(".MuiGrid-grid-sm-4");
+          return gridItem?.parentElement === categoryGrid;
+        }),
+      ).toBe(true);
+    }
   });
 
   it("shows the sort controls underneath the main title", () => {
