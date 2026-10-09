@@ -10,3 +10,5 @@ export interface Resource {
     description: string
     date_uploaded: string
 }
+
+export type ResourceGroups = Partial<Record<Category, Resource[]>>;
