@@ -1,6 +1,6 @@
 // src/utils/resources.test.ts
 import { describe, expect, it } from "vitest";
-import { groupByCategory, filterResources } from "./resourceUtils";
+import { groupByCategory, filterResources, sortResourcesByDate } from "./resourceUtils";
 
 const makeResource = (overrides: Partial<Resource> = {}): Resource => ({
   id: "1",
@@ -76,5 +76,34 @@ describe("filterResources", () => {
 
   it("returns no resources when nothing matches", () => {
     expect(filterResources(resources, "cooking")).toEqual([]);
+  });
+});
+
+describe("sortResourcesByDate", () => {
+  it("sorts resources with the newest upload date first", () => {
+    const resources = [
+      makeResource({ id: "1", date_uploaded: "2025-06-22" }),
+      makeResource({ id: "2", date_uploaded: "2025-08-05" }),
+      makeResource({ id: "3", date_uploaded: "2025-07-10" }),
+    ];
+
+    const result = sortResourcesByDate(resources);
+
+    expect(result.map(({ id }) => id)).toEqual(["2", "3", "1"]);
+  });
+
+  it("does not change the original resources array", () => {
+    const resources = [
+      makeResource({ id: "1", date_uploaded: "2025-06-22" }),
+      makeResource({ id: "2", date_uploaded: "2025-08-05" }),
+    ];
+
+    sortResourcesByDate(resources);
+
+    expect(resources.map(({ id }) => id)).toEqual(["1", "2"]);
+  });
+
+  it("returns an empty array when there are no resources", () => {
+    expect(sortResourcesByDate([])).toEqual([]);
   });
 });
