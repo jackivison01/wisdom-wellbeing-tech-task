@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
 import { ResourceCard } from "./ResourceCard";
 import type { Resource } from "../models/resource";
 
@@ -16,7 +17,7 @@ const resource: Resource = {
 
 describe("ResourceCard", () => {
   it("displays a resource's key information", () => {
-    render(<ResourceCard resource={resource} />);
+    render(<ResourceCard resource={resource} onSelect={vi.fn()} />);
 
     expect(
       screen.getByRole("heading", { name: "Mindful Moments" }),
@@ -30,4 +31,17 @@ describe("ResourceCard", () => {
     expect(screen.getByText("mindfulness")).toBeInTheDocument();
     expect(screen.getByText("25 minutes")).toBeInTheDocument();
   });
+
+  it("calls onSelect with the resource when the card is clicked", async () => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+
+    render(<ResourceCard resource={resource} onSelect={onSelect} />);
+
+    await user.click(
+        screen.getByRole("button", { name: "View Mindful Moments" }),
+    );
+
+    expect(onSelect).toHaveBeenCalledWith(resource);
+	});
 });
