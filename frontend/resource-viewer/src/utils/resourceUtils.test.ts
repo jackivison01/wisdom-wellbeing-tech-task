@@ -1,6 +1,6 @@
 // src/utils/resources.test.ts
 import { describe, expect, it } from "vitest";
-import { groupByCategory } from "./resourceUtils";
+import { groupByCategory, filterResources } from "./resourceUtils";
 
 const makeResource = (overrides: Partial<Resource> = {}): Resource => ({
   id: "1",
