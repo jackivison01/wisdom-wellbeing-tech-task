@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import rawResources from "../../../mock_data.json";
 import { ResourceCard } from "./components/ResourceCard";
+import { ResourceDetails } from "./components/ResourceDetails";
 import type { Resource } from "./models/resource";
 import { groupByCategory } from "./utils/resourceUtils";
 
@@ -8,6 +10,8 @@ const resources = rawResources as Resource[];
 
 export default function App() {
   const resourcesByCategory = groupByCategory(resources);
+  const [selectedResource, setSelectedResource] =
+    useState<Resource | null>(null);
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -25,13 +29,22 @@ export default function App() {
             <Grid container spacing={3}>
               {categoryResources.map((resource) => (
                 <Grid key={resource.id} size={{ xs: 12, sm: 6, md: 4 }}>
-                  <ResourceCard resource={resource} />
+                  <ResourceCard
+                    resource={resource}
+                    onSelect={setSelectedResource}
+                  />
                 </Grid>
               ))}
             </Grid>
           </Box>
         ),
       )}
+
+      <ResourceDetails
+        open={Boolean(selectedResource)}
+        resource={selectedResource}
+        onClose={() => setSelectedResource(null)}
+      />
     </Container>
   );
 }
