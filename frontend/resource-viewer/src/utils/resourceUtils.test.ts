@@ -1,6 +1,7 @@
 // src/utils/resources.test.ts
 import { describe, expect, it } from "vitest";
 import { groupByCategory, filterResources, sortResourcesByDate } from "./resourceUtils";
+import type { Resource } from "../models/resource";
 
 const makeResource = (overrides: Partial<Resource> = {}): Resource => ({
   id: "1",
@@ -22,8 +23,8 @@ describe("groupByCategory", () => {
       makeResource({ id: "3", category: "Podcasts", title: "C" }),
     ]);
 
-    expect(result.Podcasts.map(({ id }) => id)).toEqual(["1", "3"]);
-    expect(result.Articles.map(({ id }) => id)).toEqual(["2"]);
+    expect(result.Podcasts?.map(({ id }) => id)).toEqual(["1", "3"]);
+    expect(result.Articles?.map(({ id }) => id)).toEqual(["2"]);
   });
 
   it("returns an empty object when there are no resources", () => {
