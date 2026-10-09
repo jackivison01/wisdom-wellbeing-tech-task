@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
+import { Button, Container, Grid, Stack, Typography } from "@mui/material";
 import rawResources from "../../../mock_data.json";
 import { ResourceCard } from "./components/ResourceCard";
 import { ResourceDetails } from "./components/ResourceDetails";
@@ -17,7 +17,7 @@ export default function App() {
     () =>
       Object.entries(groupByCategory(resources)).sort(([first], [second]) =>
         first.localeCompare(second),
-      ),
+      ).flatMap(([, categoryResources]) => categoryResources),
     [],
   );
   const resourcesByDate = useMemo(() => sortResourcesByDate(resources), []);
@@ -48,34 +48,15 @@ export default function App() {
         </Button>
       </Stack>
 
-      {sortMode === "category" ? (
-        resourcesByCategory.map(([category, categoryResources]) => (
-          <Box component="section" key={category} sx={{ mb: 5 }}>
-            <Typography variant="h4" component="h2" gutterBottom>
-              {category}
-            </Typography>
-
-            <Grid container spacing={3}>
-              {categoryResources.map((resource) => (
-                <Grid key={resource.id} size={{ xs: 12, sm: 6, md: 4 }}>
-                  <ResourceCard
-                    resource={resource}
-                    onSelect={setSelectedResource}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
-        ))
-      ) : (
-        <Grid container spacing={3}>
-          {resourcesByDate.map((resource) => (
-            <Grid key={resource.id} size={{ xs: 12, sm: 6, md: 4 }}>
+      <Grid container spacing={3}>
+        {(sortMode === "category" ? resourcesByCategory : resourcesByDate).map(
+          (resource) => (
+            <Grid key={resource.id} size={{ xs: 12, sm: 4 }}>
               <ResourceCard resource={resource} onSelect={setSelectedResource} />
             </Grid>
-          ))}
-        </Grid>
-      )}
+          ),
+        )}
+      </Grid>
 
       <ResourceDetails
         open={Boolean(selectedResource)}
