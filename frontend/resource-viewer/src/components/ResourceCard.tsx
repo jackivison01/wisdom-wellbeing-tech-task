@@ -33,6 +33,10 @@ export function ResourceCard({ resource, onSelect }: ResourceCardProps) {
             {resource.title}
           </Typography>
 
+          <Typography color="text.secondary" variant="body2" sx={{ mb: 1 }}>
+            {resource.category}
+          </Typography>
+
           <Stack
             direction="row"
             spacing={1}

@@ -23,6 +23,8 @@ describe("ResourceCard", () => {
       screen.getByRole("heading", { name: "Mindful Moments" }),
     ).toBeInTheDocument();
 
+    expect(screen.getByText("Podcasts").tagName).toBe("P");
+
     expect(
       screen.getByRole("img", { name: "Mindful Moments" }),
     ).toHaveAttribute("src", resource.thumbnail);
