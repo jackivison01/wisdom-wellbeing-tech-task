@@ -32,3 +32,11 @@ export function filterResources(
     return matchesTitle || matchesTag;
   });
 }
+
+export function sortResourcesByDate(resources: Resource[]): Resource[] {
+  return [...resources].sort(
+    (first, second) =>
+      new Date(second.date_uploaded).getTime() -
+      new Date(first.date_uploaded).getTime(),
+  );
+}
