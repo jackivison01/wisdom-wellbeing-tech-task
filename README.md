@@ -107,3 +107,5 @@ Given more time, I would consider adding:
 - A data-fetching layer to replace the local mock data
 - Stronger validation on resource data payload
 - Visual refinements, including skeleton loading states
+- CICD pre-commit linting and prettier formatting as the prettier formatting was only added at the end
+- CICD automated test runs
