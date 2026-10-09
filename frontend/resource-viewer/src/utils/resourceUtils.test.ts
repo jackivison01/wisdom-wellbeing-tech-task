@@ -30,3 +30,51 @@ describe("groupByCategory", () => {
     expect(groupByCategory([])).toEqual({});
   });
 });
+
+describe("filterResources", () => {
+  const resources = [
+    makeResource({
+      id: "1",
+      title: "Mindful Moments",
+      tags: ["wellbeing", "mindfulness"],
+    }),
+    makeResource({
+      id: "2",
+      category: "Articles",
+      title: "The Science of Sleep",
+      tags: ["sleep", "science"],
+    }),
+    makeResource({
+      id: "3",
+      category: "Fitness",
+      title: "Morning Stretch",
+      tags: ["mobility", "routine"],
+    }),
+  ];
+
+  it("filters resources by title", () => {
+    const result = filterResources(resources, "sleep");
+
+    expect(result.map(({ id }) => id)).toEqual(["2"]);
+  });
+
+  it("filters resources by tag", () => {
+    const result = filterResources(resources, "mindfulness");
+
+    expect(result.map(({ id }) => id)).toEqual(["1"]);
+  });
+
+  it("is not case-sensitive", () => {
+    const result = filterResources(resources, "SLEEP");
+
+    expect(result.map(({ id }) => id)).toEqual(["2"]);
+  });
+
+  it("returns every resource for an empty search", () => {
+    expect(filterResources(resources, "")).toEqual(resources);
+  });
+
+  it("returns no resources when nothing matches", () => {
+    expect(filterResources(resources, "cooking")).toEqual([]);
+  });
+});
